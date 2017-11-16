@@ -41,6 +41,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>FBC8069B-1615-4CD3-BA60-146A434156A1</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>94F8A8DC-9518-4612-8C64-3736BA9BC9D7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Bjorn Tegelund</string>
@@ -144,6 +157,37 @@
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>13</integer>
+				<key>hotmod</key>
+				<integer>1966080</integer>
+				<key>hotstring</key>
+				<string>W</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>FBC8069B-1615-4CD3-BA60-146A434156A1</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -176,6 +220,13 @@
 			<integer>560</integer>
 			<key>ypos</key>
 			<integer>370</integer>
+		</dict>
+		<key>FBC8069B-1615-4CD3-BA60-146A434156A1</key>
+		<dict>
+			<key>xpos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>430</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
