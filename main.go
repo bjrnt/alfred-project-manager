@@ -66,7 +66,7 @@ func run() {
 
 	for _, project := range getProjectDirectories() {
 		wf.NewFileItem(project).
-			Subtitle("Open in Terminal").
+			Subtitle("Open in VSCode").
 			Arg(project).
 			UID(project).
 			Valid(true)
