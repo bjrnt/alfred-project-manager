@@ -22,5 +22,10 @@
       "type": "shell",
       "command": "alfred unlink"
     },
+    {
+      "label": "pack",
+      "type": "shell",
+      "command": "alfred pack"
+    }
   ]
 }
