@@ -80,5 +80,5 @@ func run() {
 }
 
 func main() {
-	aw.Run(run)
+	wf.Run(run)
 }
