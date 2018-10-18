@@ -6,11 +6,21 @@
     {
       "label": "build",
       "type": "shell",
-      "command": "go build ./alfred-project-manager.go",
+      "command": "alfred build",
       "group": {
         "kind": "build",
         "isDefault": true
       }
-    }
+    },
+    {
+      "label": "link",
+      "type": "shell",
+      "command": "alfred link"
+    },
+    {
+      "label": "unlink",
+      "type": "shell",
+      "command": "alfred unlink"
+    },
   ]
 }
