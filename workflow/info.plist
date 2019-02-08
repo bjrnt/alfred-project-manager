@@ -12,6 +12,16 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
+				<string>7E5DA35F-1364-4EA4-A547-9C7845EF6BEC</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
+				<key>modifiersubtext</key>
+				<string>Open repo</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
 				<string>80C9A89F-7B23-49D6-A60E-EB052C35FEE4</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -68,6 +78,25 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{var:url}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>7E5DA35F-1364-4EA4-A547-9C7845EF6BEC</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>openwith</key>
 				<string>/Applications/Visual Studio Code.app</string>
 				<key>sourcefile</key>
@@ -112,7 +141,7 @@
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string></string>
+				<string>Open in VSCode</string>
 				<key>title</key>
 				<string></string>
 				<key>type</key>
@@ -200,6 +229,13 @@
 			<key>ypos</key>
 			<integer>230</integer>
 		</dict>
+		<key>7E5DA35F-1364-4EA4-A547-9C7845EF6BEC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>430</integer>
+			<key>ypos</key>
+			<integer>10</integer>
+		</dict>
 		<key>80C9A89F-7B23-49D6-A60E-EB052C35FEE4</key>
 		<dict>
 			<key>xpos</key>
@@ -235,7 +271,7 @@
 		<string>projects</string>
 	</dict>
 	<key>version</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>webaddress</key>
 	<string>https://www.github.com/bjrnt</string>
 </dict>
