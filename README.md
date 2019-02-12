@@ -8,7 +8,7 @@ Allows you to quickly open projects from Alfred. It will try its best to provide
 
 Grab the latest release [here](https://github.com/bjrnt/alfred-project-manager/releases/) and install the workflow file.
 
-Set `PROJECT_DIRECTORY` inside the workflow's environment variables (install the workflow, select in from the workflow list, and press the `[x]` icon), and you're good to go.
+Set the `PROJECT_DIRECTORY` inside the workflow's environment variables. If you set a relative path, it is assumed this is relative to your home directory.
 
 ## Usage
 
