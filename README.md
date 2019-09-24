@@ -20,3 +20,13 @@ Open Alfred and type `pm` to access the project manager and try typing a query. 
 - `ctrl`: open the project's repo
 
 You can change which applications are used to open the project inside the workflow.
+
+## Maintenance
+
+### Issues and Feature Requests
+
+Feel free to open an issue for the project if you have encountered a problem or have a feature request for the plugin.
+
+### Building
+
+The project can be built, linked to Alfred, and released using [jason0x34/go-alfred](https://github.com/jason0x43/go-alfred). Commands for this can be found in [./.vscode/tasks.json](./.vscode/tasks.json).
