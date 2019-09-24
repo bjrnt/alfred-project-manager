@@ -1,6 +1,3 @@
-// Copyright (c) Bjorn Tegelund 2017 <b.tegelund@gmail.com>
-// MIT Licence. See http://opensource.org/licenses/MIT
-
 package main
 
 import (
@@ -14,12 +11,15 @@ import (
 
 	aw "github.com/deanishe/awgo"
 	"github.com/deanishe/awgo/fuzzy"
+	"github.com/pkg/errors"
 )
 
-const cacheName = "projects.json"
-const projectPathEnvVar = "PROJECT_DIRECTORY"
-const maxCacheAge = 30 * time.Minute
-const maxResults = 3
+const (
+	cacheName         = "projects.json"
+	projectPathEnvVar = "PROJECT_DIRECTORY"
+	maxCacheAge       = 30 * time.Minute
+	maxResults        = 3
+)
 
 var (
 	wf           *aw.Workflow
@@ -39,16 +39,20 @@ type Project struct {
 	URL  string `json:"url"`
 }
 
-func getRemote(path string) (repo string, err error) {
+func getRemote(path string) (string, error) {
 	cmd := exec.Command("git", "remote", "get-url", "origin")
 	cmd.Dir = path
 	out, err := cmd.Output()
-	if len(out) != 0 {
-		out := strings.TrimSpace(string(out))
-		remote := out[strings.Index(out, ":")+1 : strings.LastIndex(out, ".")]
-		repo = fmt.Sprintf("https://github.com/%s", remote)
+	if err != nil {
+		return "", errors.Wrap(err, "could not retrieve git command output")
 	}
-	return
+	if len(out) == 0 {
+		return "", errors.New("could not find repo's origin")
+	}
+	res := strings.TrimSpace(string(out))
+	repo := out[strings.Index(res, ":")+1 : strings.LastIndex(res, ".")]
+	url := fmt.Sprintf("https://github.com/%s", repo)
+	return url, nil
 }
 
 func projectsPath() string {
@@ -56,9 +60,11 @@ func projectsPath() string {
 	if len(dir) == 0 {
 		wf.Fatalf("Please set %s before using the workflow", projectPathEnvVar)
 	}
+	// Absolute paths will be honored
 	if path.IsAbs(dir) {
 		return dir
 	}
+	// Relatives path are in relation to the user's home directory
 	return path.Join(os.Getenv("HOME"), dir)
 }
 
@@ -72,7 +78,6 @@ func getProjects() []*Project {
 
 	projectsPath := projectsPath()
 	files, _ := ioutil.ReadDir(projectsPath)
-
 	for _, file := range files {
 		if file.IsDir() {
 			path := path.Join(projectsPath, file.Name())
@@ -89,7 +94,7 @@ func run() {
 	query := wf.Args()[1]
 	for _, project := range getProjects() {
 		wf.NewFileItem(project.Path).
-			Subtitle("Open in VSCode").
+			Subtitle("Open in editor").
 			Arg(project.Path).
 			Var("url", project.URL).
 			UID(project.Path).
