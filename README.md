@@ -19,13 +19,13 @@ Open Alfred and type `pm` to access the project manager and try typing a query. 
 - `cmd`: open the project in iTerm
 - `ctrl`: open the project's repo
 
-You can change which applications are used to open the project inside the workflow.
+You can change the modifier and application combinations in Alfred's workflow settings window.
 
 ## Maintenance
 
 ### Issues and Feature Requests
 
-Feel free to open an issue for the project if you have encountered a problem or have a feature request for the plugin.
+Feel free to open an issue for the project if you have encountered a problem or have a feature request for the workflow.
 
 ### Building
 
