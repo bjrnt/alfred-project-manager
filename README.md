@@ -1,23 +1,21 @@
 # alfred-project-manager
+> Allows you to quickly open projects from Alfred.
 
 ![usage example](/image.png)
 
-Allows you to quickly open projects from Alfred. It will try its best to provide the best possible match for your query.
-
 ## Installation
 
-Grab the latest release [here](https://github.com/bjrnt/alfred-project-manager/releases/) and install the workflow file.
-
-Set the `PROJECT_DIRECTORY` inside the workflow's environment variables. If you set a relative path, it is assumed this is relative to your home directory.
+1. Grab the latest release [here](https://github.com/bjrnt/alfred-project-manager/releases/) and install the workflow file.
+2. Set the `PROJECT_DIRECTORY` path inside the workflow's environment variables (select the workflow and press the `[x]` icon in the upper right). A relative path is assumed to be relative to your home directory.
 
 ## Usage
 
-Open Alfred and type `pm` to access the project manager and try typing a query. You can also configure a hotkey for it.
+Open Alfred and type `pm` to access the project manager and try typing a query. You can also configure a hotkey for it by opening the workflow in Alfred's workflow options panel.
 
 ## Modifiers
 
 - `none` (default): open the project in VSCode
-- `alt`: open the project in Finder
+- `alt/opt`: open the project in Finder
 - `cmd`: open the project in iTerm
 - `ctrl`: open the project's repo
 
