@@ -1,24 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
-	"os/exec"
 	"path"
-	"strings"
-	"time"
 
 	aw "github.com/deanishe/awgo"
 	"github.com/deanishe/awgo/fuzzy"
-	"github.com/pkg/errors"
 )
 
 const (
-	cacheName         = "projects.json"
-	projectPathEnvVar = "PROJECT_DIRECTORY"
-	maxCacheAge       = 30 * time.Minute
-	maxResults        = 3
+	projectDirEnvVar = "PROJECT_DIRECTORY"
+	maxResults       = 3
 )
 
 var (
@@ -34,31 +27,12 @@ func init() {
 	wf = aw.New(aw.MaxResults(maxResults), aw.SortOptions(fuzzyOptions...))
 }
 
-type Project struct {
-	Path string `json:"path"`
-	URL  string `json:"url"`
-}
-
-func getRemote(path string) (string, error) {
-	cmd := exec.Command("git", "remote", "get-url", "origin")
-	cmd.Dir = path
-	out, err := cmd.Output()
-	if err != nil {
-		return "", errors.Wrap(err, "could not retrieve git command output")
-	}
-	if len(out) == 0 {
-		return "", errors.New("could not find repo's origin")
-	}
-	res := strings.TrimSpace(string(out))
-	repo := out[strings.Index(res, ":")+1 : strings.LastIndex(res, ".")]
-	url := fmt.Sprintf("https://github.com/%s", repo)
-	return url, nil
-}
-
-func projectsPath() string {
-	dir := os.Getenv(projectPathEnvVar)
+// projectsDir is where we look for projects
+func projectsDir() string {
+	dir := os.Getenv(projectDirEnvVar)
 	if len(dir) == 0 {
-		wf.Fatalf("Please set %s before using the workflow", projectPathEnvVar)
+		const err = "Please set %s before using the workflow"
+		wf.Fatalf(err, projectDirEnvVar)
 	}
 	// Absolute paths will be honored
 	if path.IsAbs(dir) {
@@ -68,31 +42,34 @@ func projectsPath() string {
 	return path.Join(os.Getenv("HOME"), dir)
 }
 
-func getProjects() []*Project {
-	projects := []*Project{}
+// projectsPaths returns a list of project paths
+func projectPaths() []string {
+	paths := []string{}
+	dir := projectsDir()
+	files, _ := ioutil.ReadDir(dir)
+	for _, file := range files {
+		if file.IsDir() {
+			path := path.Join(dir, file.Name())
+			paths = append(paths, path)
+		}
+	}
+	return paths
+}
 
-	if wf.Cache.Exists(cacheName) && !wf.Cache.Expired(cacheName, maxCacheAge) {
-		wf.Cache.LoadJSON(cacheName, &projects)
+func projects() []Project {
+	if projects := TryCache(); len(projects) > 0 {
 		return projects
 	}
 
-	projectsPath := projectsPath()
-	files, _ := ioutil.ReadDir(projectsPath)
-	for _, file := range files {
-		if file.IsDir() {
-			path := path.Join(projectsPath, file.Name())
-			url, _ := getRemote(path)
-			projects = append(projects, &Project{Path: path, URL: string(url)})
-		}
-	}
+	projects := NewProjectsFromPaths(projectPaths())
 
-	wf.Cache.StoreJSON(cacheName, projects)
+	SaveCache(projects)
 	return projects
 }
 
 func run() {
 	query := wf.Args()[1]
-	for _, project := range getProjects() {
+	for _, project := range projects() {
 		wf.NewFileItem(project.Path).
 			Subtitle("Open in editor").
 			Arg(project.Path).
