@@ -16,7 +16,7 @@
 				<key>modifiers</key>
 				<integer>262144</integer>
 				<key>modifiersubtext</key>
-				<string>Open repo</string>
+				<string>Open repo URL</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -116,6 +116,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -129,9 +131,9 @@
 				<key>queuedelayimmediatelyinitially</key>
 				<true/>
 				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
 				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
 				<key>runningsubtext</key>
 				<string></string>
 				<key>script</key>
@@ -154,7 +156,7 @@
 			<key>uid</key>
 			<string>94F8A8DC-9518-4612-8C64-3736BA9BC9D7</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -219,7 +221,7 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>See https://github.com/bjrnt/alfred-project-manager</string>
 	<key>uidata</key>
 	<dict>
 		<key>6D608B30-5502-43EE-919B-DF50AFCF905A</key>
@@ -246,7 +248,7 @@
 		<key>94F8A8DC-9518-4612-8C64-3736BA9BC9D7</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<integer>305</integer>
 			<key>ypos</key>
 			<integer>230</integer>
 		</dict>
@@ -267,11 +269,15 @@
 	</dict>
 	<key>variables</key>
 	<dict>
+		<key>MAX_PROJECT_DEPTH</key>
+		<string>0</string>
 		<key>PROJECT_DIRECTORY</key>
-		<string>projects</string>
+		<string></string>
+		<key>REQUIRE_DOTGIT</key>
+		<string>false</string>
 	</dict>
 	<key>version</key>
-	<string>1.2.1</string>
+	<string>1.3.0</string>
 	<key>webaddress</key>
 	<string>https://www.github.com/bjrnt</string>
 </dict>

@@ -1,28 +1,40 @@
 package main
 
-import "time"
+import (
+	"log"
+	"time"
+)
 
 const (
 	cacheName   = "projects.json"
 	maxCacheAge = 30 * time.Minute
 )
 
-// TryCache reads in any previously cached projects. May give incorrect results right after changing
-// the PROJECTS_DIR variable.
-func TryCache() Projects {
-	if !wf.Cache.Exists(cacheName) {
-		return nil
-	}
+type cache struct {
+	params   Params
+	projects []Project
+}
+
+// TryCache reads in any previously cached projects. The cache is invalidated if the params given
+// params do not matched the saved ones.
+func TryCache(params *Params) []Project {
 	if wf.Cache.Expired(cacheName, maxCacheAge) {
+		log.Printf("Cache does not exist or has expired -- skipping cache")
 		return nil
 	}
-	projects := Projects{}
+	cache := cache{}
 	// swallow errors for invalid caches to overwrite later
-	_ = wf.Cache.LoadJSON(cacheName, &projects)
-	return projects
+	_ = wf.Cache.LoadJSON(cacheName, &cache)
+	// ensure that the cache and the current search have the same parameters
+	if !params.Equal(cache.params) {
+		log.Printf("Search params do not match cached -- skipping cache")
+		return nil
+	}
+	return cache.projects
 }
 
 // SaveCache saves the given projects to the cache file.
-func SaveCache(projects Projects) {
-	wf.Cache.StoreJSON(cacheName, projects)
+func SaveCache(params *Params, projects []Project) {
+	wf.Cache.StoreJSON(cacheName, cache{*params, projects})
+	log.Printf("Saved cache")
 }

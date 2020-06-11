@@ -2,7 +2,6 @@ package main
 
 import (
 	"io/ioutil"
-	"os"
 	"path"
 
 	aw "github.com/deanishe/awgo"
@@ -10,8 +9,7 @@ import (
 )
 
 const (
-	projectDirEnvVar = "PROJECT_DIRECTORY"
-	maxResults       = 3
+	gitDirName = ".git"
 )
 
 var (
@@ -27,50 +25,59 @@ func init() {
 	wf = aw.New(aw.MaxResults(maxResults), aw.SortOptions(fuzzyOptions...))
 }
 
-// projectsDir is where we look for projects
-func projectsDir() string {
-	dir := os.Getenv(projectDirEnvVar)
-	if len(dir) == 0 {
-		const err = "Please set %s before using the workflow"
-		wf.Fatalf(err, projectDirEnvVar)
-	}
-	// Absolute paths will be honored
-	if path.IsAbs(dir) {
-		return dir
-	}
-	// Relatives path are in relation to the user's home directory
-	return path.Join(os.Getenv("HOME"), dir)
-}
-
-// projectsPaths returns a list of project paths
-func projectPaths() []string {
-	paths := []string{}
-	dir := projectsDir()
-	files, _ := ioutil.ReadDir(dir)
+func scanDirAtPath(basePath string, workspace string, maxDepth uint, requireDotGit bool) []Project {
+	projects := []Project{}
+	fullPath := path.Join(basePath, workspace)
+	files, _ := ioutil.ReadDir(fullPath)
 	for _, file := range files {
-		if file.IsDir() {
-			path := path.Join(dir, file.Name())
-			paths = append(paths, path)
+		if !file.IsDir() {
+			continue
+		}
+
+		p := path.Join(fullPath, file.Name())
+		if requireDotGit && IsGitRepo(p) {
+			// include current and stop
+			projects = append(projects, NewProjectFromPath(p, workspace))
+			continue
+
+		} else if maxDepth > 0 {
+			// look at children and maybe add current
+			projects = append(projects, scanDirAtPath(basePath, path.Join(workspace, file.Name()), maxDepth-1, requireDotGit)...)
+		}
+
+		if !requireDotGit {
+			// include current
+			projects = append(projects, NewProjectFromPath(p, workspace))
 		}
 	}
-	return paths
+	return projects
 }
 
-func projects() []Project {
-	if projects := TryCache(); len(projects) > 0 {
+func scanProjects(params *Params) []Project {
+	return scanDirAtPath(params.ProjectsPath(), "", params.MaxProjectDepth, params.RequireDotGit)
+}
+
+func projects(params *Params) []Project {
+	if projects := TryCache(params); len(projects) > 0 {
 		return projects
 	}
 
-	projects := NewProjectsFromPaths(projectPaths())
+	projects := scanProjects(params)
 
-	SaveCache(projects)
+	SaveCache(params, projects)
 	return projects
 }
 
 func run() {
 	query := wf.Args()[1]
-	for _, project := range projects() {
+	params, err := NewParamsFromEnv()
+	if err != nil {
+		wf.Fatalf(err.Error())
+	}
+
+	for _, project := range projects(params) {
 		wf.NewFileItem(project.Path).
+			Title(project.Name()).
 			Subtitle("Open in editor").
 			Arg(project.Path).
 			Var("url", project.URL).

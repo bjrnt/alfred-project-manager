@@ -2,31 +2,28 @@ package main
 
 import (
 	"log"
+	"path"
 )
 
-type Projects = []Project
-
-func NewProjectsFromPaths(paths []string) []Project {
-	projects := []Project{}
-	for _, path := range paths {
-		projects = append(projects, NewProjectFromPath(path))
-	}
-	return projects
-}
-
 type Project struct {
-	Path string `json:"path"`
-	URL  string `json:"url"`
+	Path      string `json:"path"`
+	Workspace string `json:"workspace"`
+	URL       string `json:"url"`
 }
 
-func NewProjectFromPath(path string) Project {
+func NewProjectFromPath(path string, workspace string) Project {
 	url, err := RepoURL(path)
 	if err != nil {
 		log.Println(err)
 		url = ""
 	}
 	return Project{
-		Path: path,
-		URL:  url,
+		Path:      path,
+		Workspace: workspace,
+		URL:       url,
 	}
+}
+
+func (p *Project) Name() string {
+	return path.Join(p.Workspace, path.Base(p.Path))
 }
