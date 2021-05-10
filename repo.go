@@ -24,8 +24,7 @@ func RepoURL(path string) (string, error) {
 	if err != nil {
 		return "", errors.Wrapf(err, "could not find origin for project at path %s", path)
 	}
-	url, err := urlForOrigin(origin)
-	return url, errors.Wrapf(err, "could not format URL for project at path %s", path)
+	return urlForOrigin(origin), nil
 }
 
 func gitOriginAt(path string) (string, error) {
@@ -41,16 +40,15 @@ func gitOriginAt(path string) (string, error) {
 	return strings.TrimSpace(string(out)), nil
 }
 
-func urlForOrigin(origin string) (string, error) {
+func urlForOrigin(origin string) string {
 	if strings.HasPrefix(origin, "git@github.com") {
 		// format: git@github.com:user/repo.git
 		repo := origin[strings.Index(origin, ":")+1 : strings.LastIndex(origin, ".")]
 		url := fmt.Sprintf("https://github.com/%s", repo)
-		return url, nil
+		return url
 	} else if strings.HasPrefix(origin, "http") {
 		// assume its some kind of URL we can open directly
-		return origin, nil
+		return origin
 	}
-
-	return "", errors.Errorf("unrecognized origin format: %s", origin)
+	return ""
 }

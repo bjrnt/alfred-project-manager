@@ -5,11 +5,7 @@ import (
 	"path"
 
 	aw "github.com/deanishe/awgo"
-	"github.com/deanishe/awgo/fuzzy"
-)
-
-const (
-	gitDirName = ".git"
+	"go.deanishe.net/fuzzy"
 )
 
 var (
@@ -30,7 +26,8 @@ func scanDirAtPath(basePath string, workspace string, maxDepth uint, requireDotG
 	fullPath := path.Join(basePath, workspace)
 	files, _ := ioutil.ReadDir(fullPath)
 	for _, file := range files {
-		if !file.IsDir() {
+		// Skip files that aren't directories or are hidden
+		if !file.IsDir() || file.Name()[0:1] == "." {
 			continue
 		}
 

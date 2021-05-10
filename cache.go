@@ -11,8 +11,8 @@ const (
 )
 
 type cache struct {
-	params   Params
-	projects []Project
+	Params   Params
+	Projects []Project
 }
 
 // TryCache reads in any previously cached projects. The cache is invalidated if the params given
@@ -26,15 +26,15 @@ func TryCache(params *Params) []Project {
 	// swallow errors for invalid caches to overwrite later
 	_ = wf.Cache.LoadJSON(cacheName, &cache)
 	// ensure that the cache and the current search have the same parameters
-	if !params.Equal(cache.params) {
+	if !params.Equal(cache.Params) {
 		log.Printf("Search params do not match cached -- skipping cache")
 		return nil
 	}
-	return cache.projects
+	return cache.Projects
 }
 
 // SaveCache saves the given projects to the cache file.
 func SaveCache(params *Params, projects []Project) {
-	wf.Cache.StoreJSON(cacheName, cache{*params, projects})
-	log.Printf("Saved cache")
+	err := wf.Cache.StoreJSON(cacheName, cache{*params, projects})
+	log.Printf("Saved cache with result: %s", err.Error())
 }
