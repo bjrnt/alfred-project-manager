@@ -36,5 +36,7 @@ func TryCache(params *Params) []Project {
 // SaveCache saves the given projects to the cache file.
 func SaveCache(params *Params, projects []Project) {
 	err := wf.Cache.StoreJSON(cacheName, cache{*params, projects})
-	log.Printf("Saved cache with result: %s", err.Error())
+	if err != nil {
+		log.Printf("could not save cache: %s", err.Error())
+	}
 }
