@@ -80,12 +80,14 @@
 			<dict>
 				<key>browser</key>
 				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
 				<string>{var:url}</string>
-				<key>utf8</key>
-				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
@@ -227,57 +229,112 @@
 		<key>6D608B30-5502-43EE-919B-DF50AFCF905A</key>
 		<dict>
 			<key>xpos</key>
-			<integer>560</integer>
+			<real>560</real>
 			<key>ypos</key>
-			<integer>230</integer>
+			<real>230</real>
 		</dict>
 		<key>7E5DA35F-1364-4EA4-A547-9C7845EF6BEC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>430</integer>
+			<real>430</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>80C9A89F-7B23-49D6-A60E-EB052C35FEE4</key>
 		<dict>
 			<key>xpos</key>
-			<integer>560</integer>
+			<real>560</real>
 			<key>ypos</key>
-			<integer>90</integer>
+			<real>90</real>
 		</dict>
 		<key>94F8A8DC-9518-4612-8C64-3736BA9BC9D7</key>
 		<dict>
 			<key>xpos</key>
-			<integer>305</integer>
+			<real>305</real>
 			<key>ypos</key>
-			<integer>230</integer>
+			<real>230</real>
 		</dict>
 		<key>BE1B8E2A-733A-447E-8EF1-314DFD00E7F1</key>
 		<dict>
 			<key>xpos</key>
-			<integer>560</integer>
+			<real>560</real>
 			<key>ypos</key>
-			<integer>370</integer>
+			<real>370</real>
 		</dict>
 		<key>FBC8069B-1615-4CD3-BA60-146A434156A1</key>
 		<dict>
 			<key>xpos</key>
-			<integer>300</integer>
+			<real>300</real>
 			<key>ypos</key>
-			<integer>430</integer>
+			<real>430</real>
 		</dict>
 	</dict>
-	<key>variables</key>
-	<dict>
-		<key>MAX_PROJECT_DEPTH</key>
-		<string>0</string>
-		<key>PROJECT_DIRECTORY</key>
-		<string></string>
-		<key>REQUIRE_DOTGIT</key>
-		<string>false</string>
-	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string></string>
+				<key>filtermode</key>
+				<integer>1</integer>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>The directory containing your projects</string>
+			<key>label</key>
+			<string>Project Directory</string>
+			<key>type</key>
+			<string>filepicker</string>
+			<key>variable</key>
+			<string>ProjectDirectory</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<false/>
+				<key>required</key>
+				<false/>
+				<key>text</key>
+				<string>Require Git Repo</string>
+			</dict>
+			<key>description</key>
+			<string>Enable this to hide folders in your project directory that are not valid git repos</string>
+			<key>label</key>
+			<string>Show only valid Git repos</string>
+			<key>type</key>
+			<string>checkbox</string>
+			<key>variable</key>
+			<string>RequireDotGit</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>0</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>This controls how many folders "deep" the workflow will look for your projects within your projects folder. For example, set this to 1 if you have grouped projects in other folders within your project directory.</string>
+			<key>label</key>
+			<string>Maximum Project Depth</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>MaxProjectDepth</string>
+		</dict>
+	</array>
 	<key>version</key>
-	<string>1.4.0</string>
+	<string>1.5.0</string>
 	<key>webaddress</key>
 	<string>https://www.github.com/bjrnt</string>
 </dict>

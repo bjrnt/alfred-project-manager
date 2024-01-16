@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	projectDirEnvVar   = "PROJECT_DIRECTORY"
-	reqDotGitEnvVar    = "REQUIRE_DOTGIT"
-	maxProjDepthEnvVar = "MAX_PROJECT_DEPTH"
+	projectDirEnvVar   = "ProjectDirectory"
+	reqDotGitEnvVar    = "RequireDotGit"
+	maxProjDepthEnvVar = "MaxProjectDepth"
 	maxResults         = 5
 )
 
@@ -24,7 +24,7 @@ type Params struct {
 func NewParamsFromEnv() (*Params, error) {
 	projDir := os.Getenv(projectDirEnvVar)
 	if len(projDir) == 0 {
-		return nil, fmt.Errorf("Please set %s before using the workflow", projectDirEnvVar)
+		return nil, fmt.Errorf("Please set project directory before using the workflow")
 	}
 
 	reqDotGit, err := strconv.ParseBool(os.Getenv(reqDotGitEnvVar))

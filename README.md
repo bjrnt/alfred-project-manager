@@ -6,8 +6,7 @@
 
 ## Installation
 
-1. Grab the latest release [here](https://github.com/bjrnt/alfred-project-manager/releases/) and install the workflow file.
-2. Set the `PROJECT_DIRECTORY` path inside the workflow's environment variables (select the workflow and press the `[x]` icon in the upper right). A relative path is assumed to be relative to your home directory.
+- Grab the latest release [here](https://github.com/bjrnt/alfred-project-manager/releases/) and install the workflow file.
 
 ## Usage
 
@@ -22,17 +21,10 @@ Open Alfred and type `pm` to access the project manager and try typing a query. 
 
 You can change the modifier and application combinations in Alfred's workflow settings window.
 
-### Further Config
+### Features
 
-#### Show Only Git Repos
-
-If you only want the workflow to show valid Git repos, you can set the `REQUIRE_DOTGIT` to `true` in the workflow's environment variables.
-
-#### Workspaced Projects
-
-You can configure the workflow `MAX_PROJECT_DEPTH` to an integer larger than zero if you have nested or workspaced projects. For example, if you have different folders for different companies or clients where you have your projects, you would set this to 1.
-
-It is recommended you combine this option with only showing git repos to avoid false positives.
+- Enable "Show only valid Git repos" if you want to exclude folders in your project directory that are not Git repos.
+- Increase "Maximum Project Depth" if your projects are grouped within other folders in your projects directory. For example, if my "projects" folder has folders "personal" and "work" and both of these contain my projects, I'd set the value to 1.
 
 ## Maintenance
 
