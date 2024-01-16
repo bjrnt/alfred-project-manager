@@ -43,7 +43,13 @@ func gitOriginAt(path string) (string, error) {
 func urlForOrigin(origin string) string {
 	if strings.HasPrefix(origin, "git@github.com") {
 		// format: git@github.com:user/repo.git
-		repo := origin[strings.Index(origin, ":")+1 : strings.LastIndex(origin, ".")]
+		end := len(origin) - 1
+		// sometimes the .git can be missing
+		indexOfLastPeriod := strings.LastIndex(origin, ".")
+		if indexOfLastPeriod != -1 {
+			end = indexOfLastPeriod
+		}
+		repo := origin[strings.Index(origin, ":")+1 : end]
 		url := fmt.Sprintf("https://github.com/%s", repo)
 		return url
 	} else if strings.HasPrefix(origin, "http") {
